@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { LuPlus, LuTrash2, LuArrowRight } from "react-icons/lu";
+import React, { useEffect, useState, useContext } from "react";
+import { LuPlus, LuTrash2, LuArrowRight, LuCheck, LuTrendingUp } from "react-icons/lu";
 import { CARD_BG } from "../../utils/data";
 import toast from "react-hot-toast";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
@@ -12,9 +12,11 @@ import Modal from "../../components/Modal";
 import CreateSessionForm from "./CreateSessionForm";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuMessageCircle } from "react-icons/lu";
+import { UserContext } from "../../context/userContext";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [sessions, setSessions] = useState([]);
   const [openDeleteAlert, setOpenDeleteAlert] = useState({
@@ -45,44 +47,114 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="px-8 py-8 flex-1">
+        {/* Welcome Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <h1 className="text-3xl font-bold text-gray-900">
+            Hai, {user?.name?.split(" ")[0]}
+          </h1>
+          <p className="text-gray-600 mt-1">Welcome back to UpskillMe AI</p>
+        </motion.div>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500 hover:shadow-md transition-shadow"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm font-medium">Total Sessions</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2">{sessions.length}</p>
+              </div>
+              <div className="text-orange-500 text-3xl">
+                <LuMessageCircle />
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500 hover:shadow-md transition-shadow"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm font-medium">In Progress</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2">
+                  {sessions.filter(s => s.status === "in-progress").length}
+                </p>
+              </div>
+              <div className="text-orange-500 text-3xl">
+                <LuTrendingUp />
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500 hover:shadow-md transition-shadow"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm font-medium">Completed</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2">
+                  {sessions.filter(s => s.status === "completed").length}
+                </p>
+              </div>
+              <div className="text-orange-500 text-3xl">
+                <LuCheck />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <motion.h1
+        <div className="flex justify-between items-center mb-6">
+          <motion.h2
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="text-2xl md:text-3xl font-bold text-gray-800"
+            className="text-2xl font-bold text-gray-800"
           >
             Interview Sessions
-          </motion.h1>
+          </motion.h2>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setOpenCreateModal(true)}
-            className="hidden md:flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-medium px-5 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all"
+            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium px-5 py-2.5 rounded-lg shadow-lg hover:shadow-xl transition-all"
           >
             <LuPlus className="text-lg" />
-            New Session
+            Create Interview
           </motion.button>
         </div>
 
         {/* Sessions Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(3)].map((_, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-md p-6 h-64 animate-pulse"
+                className="bg-white rounded-xl shadow-sm p-6 h-72 animate-pulse border border-gray-200"
               >
                 <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
                 <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
                 <div className="h-4 bg-gray-200 rounded w-5/6 mb-2"></div>
                 <div className="h-4 bg-gray-200 rounded w-4/6 mb-6"></div>
-                <div className="h-8 bg-gray-200 rounded w-24"></div>
+                <div className="h-10 bg-gray-200 rounded w-24"></div>
               </motion.div>
             ))}
           </div>
@@ -90,22 +162,22 @@ const Dashboard = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex flex-col items-center justify-center py-16 text-center"
+            className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl border border-gray-200"
           >
-            <div className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mb-6">
-              <LuPlus className="text-3xl text-amber-600" />
+            <div className="w-24 h-24 bg-orange-100 rounded-full flex items-center justify-center mb-6">
+              <LuPlus className="text-4xl text-orange-600" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">
               No Sessions Yet
             </h3>
-            <p className="text-gray-600 mb-6 max-w-md">
+            <p className="text-gray-600 mb-8 max-w-md">
               Create your first interview session to get started with AI-powered practice
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setOpenCreateModal(true)}
-              className="bg-gradient-to-r from-amber-500 to-amber-600 text-white font-medium px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all"
             >
               Create First Session
             </motion.button>
@@ -126,30 +198,56 @@ const Dashboard = () => {
                   whileHover={{ y: -5 }}
                   exit={{ opacity: 0 }}
                   layout
+                  className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all"
                 >
-                  <SummaryCard
-                    colors={CARD_BG[index % CARD_BG.length]}
-                    role={data?.role || ""}
-                    topicsToFocus={data?.topicsToFocus || ""}
-                    experience={data?.experience || ""}
+                  <div className={`h-2 bg-gradient-to-r ${CARD_BG[index % CARD_BG.length]}`}></div>
+                  <div className="p-6">
+                    <div className="mb-4">
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">
+                        {data?.role || "Untitled"}
+                      </h3>
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        {data?.description || "No description provided"}
+                      </p>
+                    </div>
 
-                    description={data?.description || ""}
-                    lastUpdated={
-                      data?.updatedAt
-                        ? moment(data?.updatedAt).format("MMM DD, YYYY")
-                        : ""
-                    }
-                    questions={
-                      Array.isArray(data?.question) ? data.question.length : 0
-                    }
-                    onSelect={() => navigate(`/interview-prep/${data?._id}`)}
-                    onDelete={() =>
-                      setOpenDeleteAlert({
-                        open: true,
-                        data: data,
-                      })
-                    }
-                  />
+                    <div className="space-y-3 mb-6 text-sm">
+                      <div className="flex items-center text-gray-700">
+                        <span className="font-medium text-gray-900 min-w-20">Experience:</span>
+                        <span className="text-gray-600">{data?.experience || "Not specified"}</span>
+                      </div>
+                      <div className="flex items-center text-gray-700">
+                        <span className="font-medium text-gray-900 min-w-20">Questions:</span>
+                        <span className="text-gray-600">{Array.isArray(data?.question) ? data.question.length : 0}</span>
+                      </div>
+                      <div className="flex items-center text-gray-700">
+                        <span className="font-medium text-gray-900 min-w-20">Updated:</span>
+                        <span className="text-gray-600">
+                          {data?.updatedAt ? moment(data?.updatedAt).format("MMM DD") : "N/A"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => navigate(`/interview-prep/${data?._id}`)}
+                        className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium py-2 rounded-lg hover:shadow-md transition-all flex items-center justify-center gap-2"
+                      >
+                        Start
+                        <LuArrowRight className="text-sm" />
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setOpenDeleteAlert({ open: true, data: data })}
+                        className="px-3 bg-red-50 text-red-600 font-medium rounded-lg hover:bg-red-100 transition-all"
+                      >
+                        <LuTrash2 />
+                      </motion.button>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -161,7 +259,7 @@ const Dashboard = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setOpenCreateModal(true)}
-          className="md:hidden fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full shadow-xl flex items-center justify-center z-10"
+          className="md:hidden fixed bottom-24 right-8 w-14 h-14 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full shadow-xl flex items-center justify-center z-10"
         >
           <LuPlus className="text-2xl" />
         </motion.button>
@@ -265,7 +363,7 @@ const Dashboard = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => toast("This feature is coming soon 🚧")}
-        className="fixed bottom-8 right-8 z-20 w-14 h-14 rounded-full bg-amber-600 text-white shadow-xl flex items-center justify-center"
+        className="fixed bottom-8 right-8 z-20 w-14 h-14 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-xl flex items-center justify-center"
       >
         <LuMessageCircle className="text-2xl" />
       </motion.button>

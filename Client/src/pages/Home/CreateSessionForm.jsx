@@ -1,8 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { LuBriefcase, LuTrendingUp, LuBookmark, LuFileText, LuSparkles } from 'react-icons/lu';
 import toast from 'react-hot-toast';
 
-import Input from "../../components/Inputs/Input";
 import SpinnerLoader from '../../components/Loader/SpinnerLoader';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
@@ -39,6 +40,7 @@ const CreateSessionForm = () => {
 
     if (!role || !experience || !topicsToFocus) {
       setError("Please fill all the required fields.");
+      toast.error("Please fill all required fields");
       return;
     }
 
@@ -59,11 +61,7 @@ const CreateSessionForm = () => {
         }
       );
 
-      console.log("AI RESPONSE:", aiResponse.data);
-
-      // FIXED LINE
-      const generatedQuestions =
-        aiResponse.data.questions;
+      const generatedQuestions = aiResponse.data.questions;
 
       // ============================
       // Create Session
@@ -76,107 +74,181 @@ const CreateSessionForm = () => {
         }
       );
 
-      console.log("SESSION RESPONSE:", response.data);
-
       if (response.data?.session?._id) {
         toast.success("Session created successfully!");
-
-        navigate(
-          `/interview-prep/${response.data.session._id}`
-        );
+        navigate(`/interview-prep/${response.data.session._id}`);
       }
     } catch (error) {
-      console.error(
-        "❌ Error creating session:",
-        error?.response?.data || error.message
-      );
-
-      setError("Failed to create session. Please try again.");
+      const errorMessage = error?.response?.data?.message || "Failed to create session. Please try again.";
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="w-[90vw] md:w-[35vw] p-7 flex flex-col justify-center">
-      <h3 className="text-lg font-semibold text-black">
-        Start a New Interview Journey
-      </h3>
-
-      <p className="text-xs text-slate-700 mt-[5px] mb-3">
-        Fill out the form below to create a new
-        interview preparation session.
-      </p>
-
-      <form
-        onSubmit={handleCreateSession}
-        className="flex flex-col gap-3"
-      >
-        <Input
-          value={formData.role}
-          onChange={(e) =>
-            handleChange('role', e.target.value)
-          }
-          label="Role"
-          placeholder="(e.g. Software Engineer, Data Scientist)"
-          type="text"
-        />
-
-        <Input
-          value={formData.experience}
-          onChange={(e) =>
-            handleChange('experience', e.target.value)
-          }
-          label="Experience (Years)"
-          placeholder="(e.g. 1, 2, 3)"
-          type="number"
-        />
-
-        <Input
-          value={formData.topicsToFocus}
-          onChange={(e) =>
-            handleChange(
-              'topicsToFocus',
-              e.target.value
-            )
-          }
-          label="Topics to Focus"
-          placeholder="(e.g. Data Structures, Algorithms, System Design)"
-          type="text"
-        />
-
-        <Input
-          value={formData.description}
-          onChange={(e) =>
-            handleChange(
-              'description',
-              e.target.value
-            )
-          }
-          label="Description"
-          placeholder="(e.g. Brief description of your preparation goals)"
-          type="text"
-        />
-
-        {error && (
-          <p className="text-red-500 text-xs">
-            {error}
-          </p>
-        )}
-
-        <button
-          type="submit"
-          className="btn-primary w-full mt-2"
-          disabled={isLoading}
+    <motion.div
+      className="w-[90vw] md:w-[40vw]"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="bg-white rounded-2xl shadow-xl p-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="mb-6"
         >
-          {isLoading ? (
-            <SpinnerLoader />
-          ) : (
-            "Create Session"
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-50 rounded-xl flex items-center justify-center">
+              <LuSparkles className="text-orange-600" size={24} />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900">
+                Create Interview Session
+              </h3>
+              <p className="text-sm text-gray-600 mt-0.5">
+                AI-powered interview preparation
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        <form onSubmit={handleCreateSession} className="space-y-4">
+          {/* Role Field */}
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.15 }}
+          >
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Job Role <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <LuBriefcase className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <input
+                type="text"
+                value={formData.role}
+                onChange={(e) => handleChange('role', e.target.value)}
+                placeholder="e.g. Frontend Engineer, Product Manager"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+              />
+            </div>
+          </motion.div>
+
+          {/* Experience Field */}
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Years of Experience <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <LuTrendingUp className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <input
+                type="number"
+                value={formData.experience}
+                onChange={(e) => handleChange('experience', e.target.value)}
+                placeholder="e.g. 2, 5, 10"
+                min="0"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+              />
+            </div>
+          </motion.div>
+
+          {/* Topics to Focus Field */}
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.25 }}
+          >
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Topics to Focus <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <LuBookmark className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <input
+                type="text"
+                value={formData.topicsToFocus}
+                onChange={(e) => handleChange('topicsToFocus', e.target.value)}
+                placeholder="e.g. React, Node.js, System Design"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+              />
+            </div>
+          </motion.div>
+
+          {/* Description Field */}
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Additional Notes (Optional)
+            </label>
+            <div className="relative">
+              <LuFileText className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <textarea
+                value={formData.description}
+                onChange={(e) => handleChange('description', e.target.value)}
+                placeholder="Any specific areas or companies you're targeting?"
+                rows="3"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition resize-none"
+              />
+            </div>
+          </motion.div>
+
+          {/* Error Message */}
+          {error && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-500 text-sm bg-red-50 border border-red-200 rounded-lg p-2.5"
+            >
+              {error}
+            </motion.p>
           )}
-        </button>
-      </form>
-    </div>
+
+          {/* Submit Button */}
+          <motion.button
+            type="submit"
+            disabled={isLoading}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2"
+          >
+            {isLoading ? (
+              <>
+                <SpinnerLoader />
+                Creating session...
+              </>
+            ) : (
+              <>
+                Start Interview Session
+                <LuSparkles size={18} />
+              </>
+            )}
+          </motion.button>
+        </form>
+
+        {/* Info Box */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.35 }}
+          className="mt-6 p-3.5 bg-blue-50 border border-blue-200 rounded-lg"
+        >
+          <p className="text-xs text-blue-700">
+            <strong>💡 Pro Tip:</strong> Our AI will generate 10 tailored questions based on your inputs to help you ace your interview!
+          </p>
+        </motion.div>
+      </div>
+    </motion.div>
   );
 };
 

@@ -1,15 +1,19 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { LuMail, LuLock, LuArrowRight } from 'react-icons/lu';
 import Input from '../../components/Inputs/Input';
-import { validateEmail } from '../../utils/helper'; // Assuming you have a helper function for email validation
+import { validateEmail } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import { UserContext } from '../../context/userContext';
+import toast from 'react-hot-toast';
 
 const Login = ({ setCurrentPage }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const { updateUser } = useContext(UserContext);
 
@@ -17,26 +21,25 @@ const Login = ({ setCurrentPage }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Add your login logic here
 
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
+      toast.error("Invalid email address");
       return;
     }
     if (!password) {
       setError("Password cannot be empty.");
+      toast.error("Password is required");
       return;
     }
     if (password.length < 8) {
       setError("Password must be at least 8 characters long.");
+      toast.error("Password too short");
       return;
     }
 
-    setError(""); // Clear any previous errors
-
-
-    // Login api call
-
+    setError("");
+    setIsLoading(true);
 
     try {
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
@@ -44,68 +47,137 @@ const Login = ({ setCurrentPage }) => {
         password: password.trim()
       });
 
-      console.log("Login Response:", response.data); // ✅
-
       const { token } = response.data;
 
       if (token) {
         localStorage.setItem("token", token);
         updateUser(response.data);
+        toast.success("Login successful!");
         navigate("/dashboard");
       } else {
         setError("Login failed: Invalid response from server.");
+        toast.error("Login failed");
       }
-
     } catch (error) {
-      console.error("Login error:", error); // ✅
       if (error.response?.data?.message) {
         setError(error.response.data.message);
+        toast.error(error.response.data.message);
       } else {
         setError("An unexpected error occurred. Please try again later.");
+        toast.error("Login error");
       }
+    } finally {
+      setIsLoading(false);
     }
-
-
-
   };
 
   return (
-    <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center">
-      <h3 className="text-lg font-semibold  text-black">
-        Welcome Back to UpSkillMe AI
-      </h3>
-      <p className="text-xs  text-slate-700 mt-[5px] mb-6">
-        Please login to continue
-      </p>
+    <motion.div
+      className="w-[90vw] md:w-[35vw]"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="bg-white rounded-2xl shadow-xl p-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="mb-6"
+        >
+          <h3 className="text-2xl font-bold text-gray-900">
+            Welcome Back
+          </h3>
+          <p className="text-sm text-gray-600 mt-1">
+            Login to continue your interview prep journey
+          </p>
+        </motion.div>
 
-      <form onSubmit={handleLogin}>
-        <Input
-          value={email}
-          onChange={({ target }) => setEmail(target.value)}
-          label="Email Address"
-          placeholder="sunny@example.com"
-          type="text"
-        />
+        <form onSubmit={handleLogin} className="space-y-4">
+          {/* Email Field */}
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email Address
+            </label>
+            <div className="relative">
+              <LuMail className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <input
+                type="email"
+                value={email}
+                onChange={({ target }) => setEmail(target.value)}
+                placeholder="sunny@example.com"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+              />
+            </div>
+          </motion.div>
 
-        <Input
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-          label="Password"
-          placeholder="Min 8 Characters"
-          type="password"
-        />
+          {/* Password Field */}
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
+            <div className="relative">
+              <LuLock className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <input
+                type="password"
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
+                placeholder="Min 8 Characters"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+              />
+            </div>
+          </motion.div>
 
-        {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
-        <button className="btn-primary" type='submit'>LOGIN</button>
-        <p className="text-[13px] text-slate-800 mt-3">
+          {/* Error Message */}
+          {error && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-500 text-sm bg-red-50 border border-red-200 rounded-lg p-2.5"
+            >
+              {error}
+            </motion.p>
+          )}
+
+          {/* Login Button */}
+          <motion.button
+            type="submit"
+            disabled={isLoading}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2"
+          >
+            {isLoading ? "Logging in..." : (
+              <>
+                LOGIN
+                <LuArrowRight size={18} />
+              </>
+            )}
+          </motion.button>
+        </form>
+
+        {/* Signup Link */}
+        <p className="text-sm text-gray-700 mt-6 text-center">
           Don't have an account?{" "}
-          <button className="font-medium text-primary underline cursor-pointer" onClick={() => {
-            setCurrentPage("signup");
-          }}>SignUp</button>
-
+          <button
+            type="button"
+            onClick={() => setCurrentPage("signup")}
+            className="text-orange-600 font-semibold hover:text-orange-700 transition"
+          >
+            Sign Up
+          </button>
         </p>
-      </form>
-    </div>
+      </div>
+    </motion.div>
   );
 };
 

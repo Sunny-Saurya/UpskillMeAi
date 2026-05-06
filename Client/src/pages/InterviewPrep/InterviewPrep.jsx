@@ -150,16 +150,16 @@ const InterviewPrep = () => {
             }
           />
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="px-8 py-8">
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex justify-between items-center mb-6"
+              className="flex justify-between items-center mb-8"
             >
-              <h2 className="text-2xl font-bold text-gray-800">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
                 Interview Q & A
               </h2>
-              <div className="flex items-center gap-2 text-xs text-amber-600 font-semibold bg-amber-100 px-3 py-1 rounded-full border border-amber-200">
+              <div className="flex items-center gap-2 text-xs text-orange-600 font-semibold bg-orange-100 px-4 py-2 rounded-full border border-orange-200">
                 <LuSparkles className="text-base" />
                 AI-Powered
               </div>
@@ -169,40 +169,41 @@ const InterviewPrep = () => {
               <div className={`col-span-12 ${openLearnMoreDrawer ? "lg:col-span-8" : ""}`}>
                 <AnimatePresence>
                   {sessionData?.questions?.length > 0 ? (
-                    sessionData.questions.map((data, index) => (
-                      <motion.div
-                        key={data._id || index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ 
-                          duration: 0.4,
-                          type: "spring",
-                          stiffness: 100,
-                          delay: index * 0.1,
-                          damping: 15
-                        }}
-                        layout
-                        layoutId={`question-${data._id || index}`}
-                        className="mb-6"
-                      >
-                        <QuestionCard
-                          question={data?.question}
-                          answer={data?.answer}
-                          isPinned={data?.isPinned}
-                          onLearnMore={() => generateConceptExplanation(data.question)}
-                          onTogglePin={() => toggleQuestionPinStatus(data._id)}
-                        />
-                      </motion.div>
-                    ))
+                    <div className="space-y-4">
+                      {sessionData.questions.map((data, index) => (
+                        <motion.div
+                          key={data._id || index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ 
+                            duration: 0.4,
+                            type: "spring",
+                            stiffness: 100,
+                            delay: index * 0.1,
+                            damping: 15
+                          }}
+                          layout
+                          layoutId={`question-${data._id || index}`}
+                        >
+                          <QuestionCard
+                            question={data?.question}
+                            answer={data?.answer}
+                            isPinned={data?.isPinned}
+                            onLearnMore={() => generateConceptExplanation(data.question)}
+                            onTogglePin={() => toggleQuestionPinStatus(data._id)}
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
                   ) : (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className="bg-white rounded-xl p-8 text-center shadow-sm border border-gray-100"
                     >
-                      <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <LuSparkles className="text-2xl text-amber-600" />
+                      <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <LuSparkles className="text-2xl text-orange-600" />
                       </div>
                       <h3 className="text-lg font-semibold text-gray-800 mb-2">
                         No Questions Yet
@@ -235,7 +236,7 @@ const InterviewPrep = () => {
                         <SpinnerLoader size={20} />
                       ) : (
                         <>
-                          <LuListCollapse className="text-xl text-amber-600" />
+                          <LuListCollapse className="text-xl text-orange-600" />
                           <span className="ml-2 text-sm font-medium text-gray-700">
                             Generate More Questions
                           </span>
@@ -248,57 +249,69 @@ const InterviewPrep = () => {
             </div>
           </div>
 
-          <Drawer
-            isOpen={openLearnMoreDrawer}
-            onClose={() => setOpenLearnMoreDrawer(false)}
-            title={explanation?.title || "AI Explanation"}
-          >
-            {errorMsg && (
+          <AnimatePresence>
+            {openLearnMoreDrawer && (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 text-sm text-red-600 p-4 bg-red-50 rounded-lg mb-4"
+                initial={{ opacity: 0, x: 400 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 400 }}
+                transition={{ type: "spring", damping: 25 }}
+                className="fixed inset-0 lg:col-span-4 lg:static bg-white lg:bg-white shadow-2xl lg:shadow-lg rounded-t-2xl lg:rounded-lg z-40 lg:z-0 overflow-hidden flex flex-col"
               >
-                <LuCircleAlert className="text-lg" />
-                {errorMsg}
-              </motion.div>
-            )}
-
-            {isLoading ? (
-              <div className="space-y-4">
-                <SkeletonLoader />
-                <SkeletonLoader />
-                <SkeletonLoader />
-              </div>
-            ) : explanation ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                <AIResponsePreview content={explanation.explanation} />
-              </motion.div>
-            ) : (
-              <div className="flex flex-col items-center justify-center h-64 text-center">
-                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-                  <LuSparkles className="text-2xl text-amber-600" />
+                {/* Header */}
+                <div className="sticky top-0 bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4 flex items-center justify-between border-b border-orange-600">
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                    <LuSparkles className="text-xl" />
+                    Question Explanation
+                  </h2>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setOpenLearnMoreDrawer(false)}
+                    className="text-white hover:bg-orange-700 p-2 rounded-lg transition"
+                  >
+                    ✕
+                  </motion.button>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  No Explanation Generated
-                </h3>
-                <p className="text-gray-600">
-                  Click "Learn More" on a question to see AI-generated insights
-                </p>
-              </div>
+
+                {/* Content */}
+                <div className="flex-1 overflow-y-auto p-6">
+                  {errorMsg && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-center gap-3 text-sm text-red-600 p-4 bg-red-50 rounded-lg mb-4 border border-red-200"
+                    >
+                      <LuCircleAlert className="text-lg flex-shrink-0" />
+                      <span>{errorMsg}</span>
+                    </motion.div>
+                  )}
+
+                  {isLoading ? (
+                    <div className="flex justify-center py-12">
+                      <SpinnerLoader text="Generating explanation..." />
+                    </div>
+                  ) : explanation ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="space-y-4"
+                    >
+                      <AIResponsePreview content={explanation.explanation} />
+                    </motion.div>
+                  ) : null}
+                </div>
+              </motion.div>
             )}
-          </Drawer>
+          </AnimatePresence>
         </>
       )}
       <motion.button
   whileHover={{ scale: 1.1 }}
   whileTap={{ scale: 0.95 }}
   onClick={() => toast("This feature is coming soon 🚧")}
-  className="fixed bottom-8 right-8 z-20 w-14 h-14 rounded-full bg-amber-600 text-white shadow-xl flex items-center justify-center"
+  className="fixed bottom-8 right-8 z-20 w-14 h-14 rounded-full bg-orange-600 text-white shadow-xl flex items-center justify-center"
 >
   <LuMessageCircle className="text-2xl" />
 </motion.button>

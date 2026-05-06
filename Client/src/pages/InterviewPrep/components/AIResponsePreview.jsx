@@ -17,8 +17,8 @@ const AIResponsePreview = ({ content }) => {
       className="p-6 bg-white rounded-xl shadow-sm border border-gray-100"
     >
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
-          <LuSparkles className="text-amber-600" />
+        <div className="w-8 h-8 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center">
+          <LuSparkles className="text-orange-600" />
         </div>
         <h3 className="text-lg font-semibold text-gray-800">AI Response</h3>
       </div>
@@ -36,7 +36,7 @@ const AIResponsePreview = ({ content }) => {
                 language={language}
               />
             ) : (
-              <code className="px-1.5 py-0.5 bg-amber-50 rounded-md text-sm font-mono text-amber-700" {...props}>
+              <code className="px-1.5 py-0.5 bg-orange-50 rounded-md text-sm font-mono text-orange-700" {...props}>
                 {children}
               </code>
             );
@@ -61,7 +61,7 @@ const AIResponsePreview = ({ content }) => {
           },
           blockquote({ children }) {
             return (
-              <blockquote className="border-l-4 border-amber-300 pl-4 italic text-gray-600 bg-amber-50/50 py-2 rounded-r mb-4">
+              <blockquote className="border-l-4 border-orange-300 pl-4 italic text-gray-600 bg-orange-50/50 py-2 rounded-r mb-4">
                 {children}
               </blockquote>
             );
@@ -82,7 +82,7 @@ const AIResponsePreview = ({ content }) => {
             return (
               <a
                 href={href}
-                className="text-amber-600 hover:text-amber-700 hover:underline font-medium"
+                className="text-orange-600 hover:text-orange-700 hover:underline font-medium"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -111,7 +111,7 @@ const AIResponsePreview = ({ content }) => {
             );
           },
           tr({ children }) {
-            return <tr className="hover:bg-amber-50/30">{children}</tr>;
+            return <tr className="hover:bg-orange-50/30">{children}</tr>;
           },
           td({ children }) {
             return (
@@ -153,8 +153,8 @@ function CodeBlock({ code, language }) {
       animate={{ opacity: 1 }}
       className="relative my-6 rounded-lg border border-gray-200 bg-[#fafafa] overflow-hidden shadow-sm"
     >
-      <div className="flex justify-between items-center px-4 py-2 bg-gradient-to-r from-amber-50 to-amber-100 border-b border-gray-200">
-        <div className="flex items-center gap-2 text-xs text-amber-700 font-medium">
+      <div className="flex justify-between items-center px-4 py-2 bg-gradient-to-r from-orange-50 to-orange-100 border-b border-gray-200">
+        <div className="flex items-center gap-2 text-xs text-orange-700 font-medium">
           <LuCode size={14} />
           <span>{language || 'code'}</span>
         </div>
@@ -162,7 +162,7 @@ function CodeBlock({ code, language }) {
           onClick={copyCode}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-1.5 text-xs text-amber-700 hover:text-amber-800 px-2.5 py-1.5 rounded-md hover:bg-amber-200/30 transition-colors"
+          className="flex items-center gap-1.5 text-xs text-orange-700 hover:text-orange-800 px-2.5 py-1.5 rounded-md hover:bg-orange-200/30 transition-colors"
           aria-label="Copy code"
         >
           <AnimatePresence mode="wait">

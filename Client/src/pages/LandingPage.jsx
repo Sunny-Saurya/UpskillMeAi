@@ -68,10 +68,10 @@ const LandingPage = () => {
             transition={{ duration: 0.5 }}
             className="flex items-center"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center mr-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center mr-3">
               <LuSparkles className="text-white text-lg" />
             </div>
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-amber-800">
+            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-800">
               UpskillMe AI
             </span>
           </motion.div>
@@ -86,7 +86,7 @@ const LandingPage = () => {
               onClick={() => setOpenAuthModal(true)}
               className="relative overflow-hidden group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <span className="relative z-10 bg-black text-sm font-semibold text-white px-6 py-2.5 rounded-full group-hover:bg-transparent transition-all duration-300 flex items-center">
                 Login / Sign Up
                 <LuArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
@@ -112,7 +112,7 @@ const LandingPage = () => {
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="flex items-center gap-2 text-xs font-semibold bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full border border-amber-200 shadow-sm"
+                className="flex items-center gap-2 text-xs font-semibold bg-orange-100 text-orange-800 px-4 py-1.5 rounded-full border border-orange-200 shadow-sm"
               >
                 <LuSparkles className="text-base" />
                 AI Powered Interview

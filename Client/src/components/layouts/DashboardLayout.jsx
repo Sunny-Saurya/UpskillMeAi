@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import TopNav from "./TopNav";
 import { motion } from "framer-motion";
 // import { LuLoader2 } from "react-icons/lu";
 import { FiAlertCircle } from "react-icons/fi";
@@ -10,12 +11,16 @@ const DashboardLayout = ({ children }) => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Navbar with subtle shadow */}
-      <Navbar />
+    <div className="min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <Sidebar />
 
       {/* Main Content Area */}
-      <main className="container mx-auto px-4 py-6">
+      <main className="ml-64 min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
+        {/* Top Navigation */}
+        {user && <TopNav />}
+        
+        <div className="flex-1">
         {user === undefined ? (
           // Loading State
           <motion.div
@@ -67,17 +72,18 @@ const DashboardLayout = ({ children }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => (window.location.href = "/")}
-              className="bg-gradient-to-r from-amber-500 to-amber-600 text-white font-medium px-6 py-2.5 rounded-lg shadow hover:shadow-md transition-all"
+              className="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium px-6 py-2.5 rounded-lg shadow hover:shadow-md transition-all"
             >
               Go to Login Page
             </motion.button>
           </motion.div>
         )}
+        </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-4 mt-8">
-        <div className="container mx-auto px-4 text-center text-sm text-gray-500">
+      <footer className="ml-64 bg-white border-t border-gray-200 py-4">
+        <div className="px-6 text-center text-sm text-gray-500">
           © {new Date().getFullYear()} UpskillMe AI. All rights reserved.
         </div>
       </footer>
