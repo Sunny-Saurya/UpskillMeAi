@@ -61,7 +61,7 @@ const ProfileInfoCard = () => {
       <div className="flex items-center">
         {/* Initials Circle */}
         <div className="w-11 h-11 rounded-full bg-gray-300 text-black font-bold flex items-center justify-center mr-3 uppercase">
-          {initial(user?.name || "")}
+          {getInitials(user?.name || "")}
         </div>
 
         <div>
