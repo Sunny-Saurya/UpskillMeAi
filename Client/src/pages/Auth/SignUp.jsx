@@ -23,7 +23,7 @@ const SignUp = ({ setCurrentPage }) => {
   const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
 
     if (!fullName) {
@@ -87,35 +87,35 @@ const SignUp = ({ setCurrentPage }) => {
 
   return (
     <motion.div
-      className="w-[90vw] md:w-[35vw]"
+      className="w-full md:max-w-md"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="bg-white rounded-2xl shadow-xl p-8">
+      <div className="bg-white rounded-xl p-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="mb-6"
+          className="mb-4"
         >
-          <h3 className="text-2xl font-bold text-gray-900">
+          <h3 className="text-xl font-bold text-gray-900">
             Create Account
           </h3>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-xs text-gray-600 mt-0.5">
             Join us and start your interview prep journey
           </p>
         </motion.div>
 
-        <form onSubmit={handleSignup} className="space-y-4">
+        <form onSubmit={handleSignUp} className="space-y-3">
           {/* Full Name Field */}
           <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Full Name
             </label>
             <div className="relative">
@@ -125,7 +125,7 @@ const SignUp = ({ setCurrentPage }) => {
                 placeholder="Sunny Kumar"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition\"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition"
               />
             </div>
           </motion.div>
@@ -136,7 +136,7 @@ const SignUp = ({ setCurrentPage }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.25 }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Email Address
             </label>
             <div className="relative">
@@ -146,7 +146,7 @@ const SignUp = ({ setCurrentPage }) => {
                 placeholder="sunny@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition\"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition"
               />
             </div>
           </motion.div>
@@ -157,7 +157,7 @@ const SignUp = ({ setCurrentPage }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
             <div className="relative">
@@ -167,7 +167,7 @@ const SignUp = ({ setCurrentPage }) => {
                 placeholder="Min 8 Characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition\"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition"
               />
             </div>
           </motion.div>
@@ -189,7 +189,7 @@ const SignUp = ({ setCurrentPage }) => {
             disabled={isLoading}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-2 text-sm rounded-lg transition duration-200 flex items-center justify-center gap-2"
           >
             {isLoading ? "Creating account..." : (
               <>
@@ -201,7 +201,7 @@ const SignUp = ({ setCurrentPage }) => {
         </form>
 
         {/* Login Link */}
-        <p className="text-sm text-gray-700 mt-6 text-center">
+        <p className="text-xs text-gray-700 mt-4 text-center">
           Already have an account?{" "}
           <button
             type="button"
