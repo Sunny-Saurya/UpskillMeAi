@@ -72,9 +72,17 @@ const Profile = () => {
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-lg p-8 text-center">
               <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-white font-bold flex items-center justify-center text-4xl shadow-lg">
-                  {getInitials(user?.name || "")}
-                </div>
+                {user?.profileImageUrl ? (
+                  <img 
+                    src={user.profileImageUrl} 
+                    alt={user?.name}
+                    className="w-24 h-24 rounded-full object-cover border-4 border-red-600 shadow-lg"
+                  />
+                ) : (
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-red-600 to-orange-600 text-white font-bold flex items-center justify-center text-4xl shadow-lg">
+                    {getInitials(user?.name || "")}
+                  </div>
+                )}
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 {user?.name || "User"}

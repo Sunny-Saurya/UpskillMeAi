@@ -25,12 +25,17 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Generate random avatar if not provided
+    const avatarStyles = ['avataaars', 'big-ears', 'big-smile', 'croodles', 'identicon', 'lorelei', 'micah', 'miniavs', 'personas'];
+    const randomStyle = avatarStyles[Math.floor(Math.random() * avatarStyles.length)];
+    const generatedAvatar = `https://api.dicebear.com/7.x/${randomStyle}/svg?seed=${encodeURIComponent(email)}`;
+
     // Create user
     const user = await User.create({
         name,
         email,
         password: hashedPassword,
-        profileImageUrl
+        profileImageUrl: profileImageUrl || generatedAvatar
     });
     res.status(201).json({
         _id: user._id,

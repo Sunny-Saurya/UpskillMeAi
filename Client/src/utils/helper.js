@@ -13,4 +13,13 @@ export const getInitials = (title) => {
     }
   }
   return initials.toUpperCase();
-} 
+}
+
+// Generate random avatar URL using DiceBear API
+export const generateAvatarUrl = (email) => {
+  // Using DiceBear's API with the email as seed to ensure consistency
+  // This will generate a unique avatar for each email
+  const avatarStyles = ['avataaars', 'big-ears', 'big-smile', 'croodles', 'identicon', 'lorelei', 'micah', 'miniavs', 'personas'];
+  const randomStyle = avatarStyles[Math.floor(Math.random() * avatarStyles.length)];
+  return `https://api.dicebear.com/7.x/${randomStyle}/svg?seed=${encodeURIComponent(email)}`;
+};

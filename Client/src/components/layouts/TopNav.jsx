@@ -38,9 +38,17 @@ const TopNav = () => {
             <div className="text-sm font-medium text-gray-800">{user?.name || "User"}</div>
             <div className="text-xs text-gray-500">Active now</div>
           </div>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-orange-600 text-white font-semibold flex items-center justify-center uppercase text-sm">
-            {getInitials(user?.name || "")}
-          </div>
+          {user?.profileImageUrl ? (
+            <img 
+              src={user.profileImageUrl} 
+              alt={user?.name}
+              className="w-10 h-10 rounded-full object-cover border-2 border-red-600"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-orange-600 text-white font-semibold flex items-center justify-center uppercase text-sm">
+              {getInitials(user?.name || "")}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -105,13 +105,13 @@ const Login = ({ setCurrentPage }) => {
               Email Address
             </label>
             <div className="relative">
-              <LuMail className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <LuMail className="absolute left-3 top-3.5 text-red-600" size={20} />
               <input
                 type="email"
                 value={email}
                 onChange={({ target }) => setEmail(target.value)}
                 placeholder="sunny@example.com"
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition\"
               />
             </div>
           </motion.div>
@@ -126,13 +126,13 @@ const Login = ({ setCurrentPage }) => {
               Password
             </label>
             <div className="relative">
-              <LuLock className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <LuLock className="absolute left-3 top-3.5 text-red-600" size={20} />
               <input
                 type="password"
                 value={password}
                 onChange={({ target }) => setPassword(target.value)}
                 placeholder="Min 8 Characters"
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition\"
               />
             </div>
           </motion.div>
@@ -154,7 +154,7 @@ const Login = ({ setCurrentPage }) => {
             disabled={isLoading}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2"
           >
             {isLoading ? "Logging in..." : (
               <>
@@ -171,7 +171,7 @@ const Login = ({ setCurrentPage }) => {
           <button
             type="button"
             onClick={() => setCurrentPage("signup")}
-            className="text-orange-600 font-semibold hover:text-orange-700 transition"
+            className="text-red-600 font-semibold hover:text-red-700 transition"
           >
             Sign Up
           </button>
