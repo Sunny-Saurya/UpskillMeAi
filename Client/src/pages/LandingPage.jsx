@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LuSparkles, LuArrowRight } from "react-icons/lu";
+import { LuSparkles, LuArrowRight, LuChevronDown, LuStar } from "react-icons/lu";
+import { FiTarget, FiMessageCircle, FiTrendingUp, FiZap } from "react-icons/fi";
 
 import HERO_IMG from "../assets/Hero_Image.png";
 import { UserContext } from '../context/userContext';
@@ -75,6 +76,28 @@ const LandingPage = () => {
               UpskillMe AI
             </span>
           </motion.div>
+
+          {/* Navigation Menu */}
+          <motion.nav
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="hidden md:flex items-center gap-8"
+          >
+            <a href="#features" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+              Features
+            </a>
+            <a href="#how-it-works" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+              How It Works
+            </a>
+            <a href="#pricing" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+              Pricing
+            </a>
+            <div className="flex items-center gap-1 text-gray-700 hover:text-orange-600 font-medium transition-colors cursor-pointer">
+              Resources
+              <LuChevronDown className="text-sm" />
+            </div>
+          </motion.nav>
 
           {user ? (
             <ProfileInfoCard />
@@ -178,23 +201,13 @@ const LandingPage = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Image */}
+          {/* Right Preview Card */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full lg:w-1/2 relative"
+            className="w-full lg:w-1/2"
           >
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-amber-300 to-amber-500 rounded-3xl opacity-20 blur-xl"></div>
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-300 to-amber-500 rounded-3xl opacity-10 blur-lg"></div>
-              <img
-                src={HERO_IMG}
-                alt="Interview Prep Illustration"
-                className="relative w-full rounded-2xl shadow-2xl border-8 border-white z-10"
-              />
-            </div>
-
             <motion.div
               animate={{
                 y: [0, -10, 0],
@@ -204,20 +217,131 @@ const LandingPage = () => {
                   ease: "easeInOut"
                 }
               }}
-              className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-gray-100 z-20"
+              className="relative"
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center text-white mb-2">
-                <LuSparkles className="text-xl" />
+              {/* Glow effects */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-orange-300 to-orange-500 rounded-3xl opacity-20 blur-xl"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-orange-300 to-orange-500 rounded-3xl opacity-10 blur-lg"></div>
+
+              {/* Preview Card */}
+              <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 z-10">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white">
+                        <LuSparkles className="text-lg" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900">Interview Prep AI</h3>
+                        <p className="text-xs text-gray-500">Frontend Developer</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs text-gray-500">Logged</p>
+                      <p className="text-sm font-semibold text-gray-800">Mike William</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content Area */}
+                <div className="flex">
+                  {/* Sidebar */}
+                  <div className="w-32 border-r border-gray-100 p-4 space-y-4">
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-orange-100 text-orange-700 text-sm font-medium cursor-pointer">
+                      <FiTarget className="text-lg" />
+                      <span className="hidden sm:inline">Dashboard</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm font-medium cursor-pointer transition-colors">
+                      <FiMessageCircle className="text-lg" />
+                      <span className="hidden sm:inline">Interviews</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm font-medium cursor-pointer transition-colors">
+                      <LuSparkles className="text-lg" />
+                      <span className="hidden sm:inline">AI Feedback</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm font-medium cursor-pointer transition-colors">
+                      <FiTrendingUp className="text-lg" />
+                      <span className="hidden sm:inline">Resources</span>
+                    </div>
+                  </div>
+
+                  {/* Main Content */}
+                  <div className="flex-1 p-6">
+                    {/* Role Info */}
+                    <div className="mb-6">
+                      <h4 className="font-bold text-gray-900 mb-1">Frontend Developer</h4>
+                      <div className="flex gap-2 flex-wrap">
+                        <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">React.js - DOM Manipulation - CSS Flexbox</span>
+                      </div>
+                      <div className="flex gap-2 mt-2 text-xs text-gray-500">
+                        <span>Experience: 2 years</span>
+                        <span>•</span>
+                        <span>Location: USA</span>
+                        <span>•</span>
+                        <span>Applied: 100-300 jobs</span>
+                      </div>
+                    </div>
+
+                    {/* Questions List */}
+                    <div className="mb-4">
+                      <h5 className="font-semibold text-gray-800 mb-3 text-sm">Interview Q & A</h5>
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {[
+                          "What is JSX? Explain its role in React?",
+                          "What is React.js and what are its main advantages?",
+                          "Explain the difference between 'props' and 'state' in React",
+                          "How does the virtual DOM work in React and why is it important?",
+                          "Describe the lifecycle methods of a React component",
+                          "What is the concept of event handling in React?",
+                          "How would you handle DOM manipulation in React? Why is it generally discouraged?"
+                        ].map((question, idx) => (
+                          <div key={idx} className="text-xs text-gray-700 flex gap-2">
+                            <span className="text-gray-400 font-medium">{idx + 1}</span>
+                            <span className="text-gray-600">{question}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Feedback Section */}
+                    <div className="border-t border-gray-100 pt-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h5 className="font-semibold text-gray-800 mb-2 text-sm">AI Feedback</h5>
+                          <p className="text-xs text-green-700 bg-green-50 p-2 rounded">Great Answer</p>
+                          <p className="text-xs text-gray-600 mt-2">You explained JSX clearly with a good example. Consider adding how it improves readability and helps prevent injection attacks.</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-xs text-gray-500 mb-1">Score</p>
+                          <p className="text-2xl font-bold text-green-600">8.5<span className="text-sm">/10</span></p>
+                          <a href="#" className="text-xs text-blue-600 hover:text-blue-700 mt-2 inline-block">View Detailed Feedback</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Related Resources */}
+                    <div className="border-t border-gray-100 mt-4 pt-4">
+                      <h5 className="font-semibold text-gray-800 mb-2 text-sm">Related Resources</h5>
+                      <div className="space-y-1">
+                        <p className="text-xs text-gray-600 flex items-center gap-2">
+                          📄 <span>CSS Flexbox: A Beginner's Guide</span>
+                        </p>
+                        <p className="text-xs text-gray-600 flex items-center gap-2">
+                          📄 <span>React Interview Cheat Sheet</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="text-sm font-semibold text-gray-800">AI Feedback</div>
-              <div className="text-xs text-gray-500">Real-time analysis</div>
             </motion.div>
           </motion.div>
         </div>
       </div>
 
       {/* Features Section */}
-      <section className="relative py-24 bg-gradient-to-b from-amber-50 to-white">
+      <section className="relative py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -230,34 +354,83 @@ const LandingPage = () => {
               Transform Your Interview Skills
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Our AI-powered platform provides everything you need to go from nervous to confident
+              Our AI-powered platform provides everything you need to go from nervous to confident.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {APP_FEATURES.map((feature, index) => (
-              <motion.div
-                key={feature.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-amber-50 relative overflow-hidden group"
-              >
-                <div className="absolute -right-10 -top-10 w-32 h-32 bg-amber-100 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative z-10">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-300 to-amber-500 rounded-xl flex items-center justify-center mb-4 text-white">
-                    <LuSparkles className="text-xl" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 mb-4">{feature.description}</p>
-                  <div className="flex items-center text-amber-600 font-medium">
-                    Learn more <LuArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
-                  </div>
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Feature 1 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0, duration: 0.5 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              className="text-center"
+            >
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-50 rounded-full flex items-center justify-center">
+                  <FiTarget className="text-orange-600 text-2xl" />
                 </div>
-              </motion.div>
-            ))}
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Role-Specific Preparation</h3>
+              <p className="text-gray-600 text-sm">Practice questions tailored to your job role, tech stack, and experience level.</p>
+            </motion.div>
+
+            {/* Feature 2 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              className="text-center"
+            >
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full flex items-center justify-center">
+                  <FiMessageCircle className="text-blue-600 text-2xl" />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">AI-Powered Feedback</h3>
+              <p className="text-gray-600 text-sm">Get instant, detailed feedback and improve your answers in real-time.</p>
+            </motion.div>
+
+            {/* Feature 3 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              className="text-center"
+            >
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-red-50 rounded-full flex items-center justify-center">
+                  <FiTrendingUp className="text-red-600 text-2xl" />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Track Your Progress</h3>
+              <p className="text-gray-600 text-sm">Monitor your performance and identify areas to focus on for improvement.</p>
+            </motion.div>
+
+            {/* Feature 4 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              className="text-center"
+            >
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-full flex items-center justify-center">
+                  <FiZap className="text-yellow-600 text-2xl" />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Build Confidence</h3>
+              <p className="text-gray-600 text-sm">Practice smarter, not harder and walk into interviews with confidence.</p>
+            </motion.div>
           </div>
         </div>
       </section>
