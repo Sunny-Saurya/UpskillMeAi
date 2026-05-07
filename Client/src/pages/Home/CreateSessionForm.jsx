@@ -89,52 +89,52 @@ const CreateSessionForm = () => {
 
   return (
     <motion.div
-      className="w-[90vw] md:w-[40vw]"
+      className="w-full md:max-w-md"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="bg-white rounded-2xl shadow-xl p-8">
+      <div className="bg-white rounded-xl p-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="mb-6"
+          className="mb-4"
         >
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-50 rounded-xl flex items-center justify-center">
-              <LuSparkles className="text-orange-600" size={24} />
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-red-100 to-red-50 rounded-lg flex items-center justify-center">
+              <LuSparkles className="text-red-600" size={20} />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">
+              <h3 className="text-lg font-bold text-gray-900">
                 Create Interview Session
               </h3>
-              <p className="text-sm text-gray-600 mt-0.5">
+              <p className="text-xs text-gray-600">
                 AI-powered interview preparation
               </p>
             </div>
           </div>
         </motion.div>
 
-        <form onSubmit={handleCreateSession} className="space-y-4">
+        <form onSubmit={handleCreateSession} className="space-y-3">
           {/* Role Field */}
           <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.15 }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Job Role <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <LuBriefcase className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <LuBriefcase className="absolute left-3 top-3 text-red-600" size={18} />
               <input
                 type="text"
                 value={formData.role}
                 onChange={(e) => handleChange('role', e.target.value)}
                 placeholder="e.g. Frontend Engineer, Product Manager"
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition"
               />
             </div>
           </motion.div>
@@ -145,18 +145,18 @@ const CreateSessionForm = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Years of Experience <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <LuTrendingUp className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <LuTrendingUp className="absolute left-3 top-3 text-red-600" size={18} />
               <input
                 type="number"
                 value={formData.experience}
                 onChange={(e) => handleChange('experience', e.target.value)}
                 placeholder="e.g. 2, 5, 10"
                 min="0"
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition"
               />
             </div>
           </motion.div>
@@ -167,17 +167,17 @@ const CreateSessionForm = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.25 }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Topics to Focus <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <LuBookmark className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <LuBookmark className="absolute left-3 top-3 text-red-600" size={18} />
               <input
                 type="text"
                 value={formData.topicsToFocus}
                 onChange={(e) => handleChange('topicsToFocus', e.target.value)}
                 placeholder="e.g. React, Node.js, System Design"
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition"
               />
             </div>
           </motion.div>
@@ -188,17 +188,17 @@ const CreateSessionForm = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Additional Notes (Optional)
             </label>
             <div className="relative">
-              <LuFileText className="absolute left-3 top-3.5 text-orange-500" size={20} />
+              <LuFileText className="absolute left-3 top-3 text-red-600" size={18} />
               <textarea
                 value={formData.description}
                 onChange={(e) => handleChange('description', e.target.value)}
                 placeholder="Any specific areas or companies you're targeting?"
-                rows="3"
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition resize-none"
+                rows="2"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-200 transition resize-none"
               />
             </div>
           </motion.div>
@@ -220,7 +220,7 @@ const CreateSessionForm = () => {
             disabled={isLoading}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-2 text-sm rounded-lg transition duration-200 flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -241,10 +241,10 @@ const CreateSessionForm = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.35 }}
-          className="mt-6 p-3.5 bg-blue-50 border border-blue-200 rounded-lg"
+          className="mt-3 p-2.5 bg-blue-50 border border-blue-200 rounded-lg"
         >
           <p className="text-xs text-blue-700">
-            <strong>💡 Pro Tip:</strong> Our AI will generate 10 tailored questions based on your inputs to help you ace your interview!
+            <strong>💡 Tip:</strong> AI generates 10 tailored questions based on your inputs!
           </p>
         </motion.div>
       </div>

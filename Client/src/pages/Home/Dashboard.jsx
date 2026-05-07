@@ -66,14 +66,14 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500 hover:shadow-md transition-shadow"
+            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-red-600 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm font-medium">Total Sessions</p>
                 <p className="text-3xl font-bold text-gray-900 mt-2">{sessions.length}</p>
               </div>
-              <div className="text-orange-500 text-3xl">
+              <div className="text-red-600 text-3xl">
                 <LuMessageCircle />
               </div>
             </div>
@@ -83,7 +83,7 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500 hover:shadow-md transition-shadow"
+            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-600 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -92,7 +92,7 @@ const Dashboard = () => {
                   {sessions.filter(s => s.status === "in-progress").length}
                 </p>
               </div>
-              <div className="text-orange-500 text-3xl">
+              <div className="text-orange-600 text-3xl">
                 <LuTrendingUp />
               </div>
             </div>
@@ -102,7 +102,7 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500 hover:shadow-md transition-shadow"
+            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-600 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -111,7 +111,7 @@ const Dashboard = () => {
                   {sessions.filter(s => s.status === "completed").length}
                 </p>
               </div>
-              <div className="text-orange-500 text-3xl">
+              <div className="text-green-600 text-3xl">
                 <LuCheck />
               </div>
             </div>
@@ -132,7 +132,7 @@ const Dashboard = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setOpenCreateModal(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium px-5 py-2.5 rounded-lg shadow-lg hover:shadow-xl transition-all"
+            className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium px-5 py-2.5 rounded-lg shadow-lg hover:shadow-xl transition-all"
           >
             <LuPlus className="text-lg" />
             Create Interview
@@ -164,8 +164,8 @@ const Dashboard = () => {
             animate={{ opacity: 1 }}
             className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl border border-gray-200"
           >
-            <div className="w-24 h-24 bg-orange-100 rounded-full flex items-center justify-center mb-6">
-              <LuPlus className="text-4xl text-orange-600" />
+            <div className="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mb-6">
+              <LuPlus className="text-4xl text-red-600" />
             </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-2">
               No Sessions Yet
@@ -177,7 +177,7 @@ const Dashboard = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setOpenCreateModal(true)}
-              className="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all"
             >
               Create First Session
             </motion.button>
@@ -233,7 +233,7 @@ const Dashboard = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => navigate(`/interview-prep/${data?._id}`)}
-                        className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium py-2 rounded-lg hover:shadow-md transition-all flex items-center justify-center gap-2"
+                        className="flex-1 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium py-2 rounded-lg hover:shadow-md transition-all flex items-center justify-center gap-2"
                       >
                         Start
                         <LuArrowRight className="text-sm" />

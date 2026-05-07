@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LuSparkles, LuArrowRight, LuChevronDown, LuStar } from "react-icons/lu";
-import { FiTarget, FiMessageCircle, FiTrendingUp, FiZap } from "react-icons/fi";
+import { LuSparkles, LuArrowRight, LuChevronDown, LuBell } from "react-icons/lu";
+import { FiTarget, FiMessageCircle, FiTrendingUp, FiZap, FiAlertCircle } from "react-icons/fi";
 
 import HERO_IMG from "../assets/Hero_Image.png";
 import { UserContext } from '../context/userContext';
@@ -31,442 +31,546 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#FFFCEF] to-amber-50 relative overflow-hidden">
-      {/* Animated background elements */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
-        transition={{ duration: 1.5 }}
-        className="fixed inset-0 overflow-hidden pointer-events-none"
-      >
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={i}
-            animate={{
-              x: [0, 100, 0],
-              y: [0, 50, 0],
-              transition: {
-                duration: 20 + Math.random() * 20,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }
-            }}
-            className="absolute w-64 h-64 bg-gradient-to-r from-amber-200 to-yellow-200 rounded-full opacity-20 blur-xl"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`
-            }}
-          />
-        ))}
-      </motion.div>
+    <div className="w-full bg-white">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 bg-gray-900 rounded flex items-center justify-center">
+              <LuSparkles className="text-white text-sm" />
+            </div>
+            <span className="font-bold text-gray-900">UpskillMe AI</span>
+          </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-40 relative z-10">
-        {/* Header */}
-        <header className="flex justify-between items-center mb-24">
+          <nav className="hidden md:flex items-center gap-8">
+            <a href="#features" className="text-gray-600 hover:text-gray-900 text-sm">Features</a>
+            <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 text-sm">How It Works</a>
+            <a href="#pricing" className="text-gray-600 hover:text-gray-900 text-sm">Pricing</a>
+          </nav>
+
+          <div className="flex items-center gap-4">
+            {user ? (
+              <ProfileInfoCard />
+            ) : (
+              <>
+                <button onClick={() => setOpenAuthModal(true)} className="text-gray-600 hover:text-gray-900 text-sm font-medium">Login</button>
+                <motion.button
+                  onClick={handleCTA}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-red-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2"
+                >
+                  Start Free Trial
+                  <LuArrowRight className="text-sm" />
+                </motion.button>
+              </>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto text-center max-w-3xl mx-auto">
+          {/* Announcement Badge */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center"
+            className="mb-8 inline-flex items-center gap-2 bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-medium"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center mr-3">
-              <LuSparkles className="text-white text-lg" />
-            </div>
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-800">
-              UpskillMe AI
-            </span>
+            <LuBell className="w-4 h-4" />
+            AI-Powered Interview Coach
+            <span className="ml-1">For Everyone</span>
           </motion.div>
 
-          {/* Navigation Menu */}
-          <motion.nav
-            initial={{ opacity: 0, y: -20 }}
+          {/* Main Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="hidden md:flex items-center gap-8"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight"
           >
-            <a href="#features" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
-              Features
-            </a>
-            <a href="#how-it-works" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
-              How It Works
-            </a>
-            <a href="#pricing" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
-              Pricing
-            </a>
-            <div className="flex items-center gap-1 text-gray-700 hover:text-orange-600 font-medium transition-colors cursor-pointer">
-              Resources
-              <LuChevronDown className="text-sm" />
-            </div>
-          </motion.nav>
+            Ace Your Next Technical Interview
+          </motion.h1>
 
-          {user ? (
-            <ProfileInfoCard />
-          ) : (
-            <motion.button
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              onClick={() => setOpenAuthModal(true)}
-              className="relative overflow-hidden group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10 bg-black text-sm font-semibold text-white px-6 py-2.5 rounded-full group-hover:bg-transparent transition-all duration-300 flex items-center">
-                Login / Sign Up
-                <LuArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
-              </span>
-            </motion.button>
-          )}
-        </header>
+          {/* Subheading */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-gray-600 mb-8"
+          >
+            Get role-specific interview questions, AI-powered feedback, and personalized coaching to transform your interview skills.
+          </motion.p>
 
-        {/* Hero Section */}
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* Left Content */}
+          {/* CTA Button */}
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            onClick={handleCTA}
+            className="bg-red-600 text-white font-medium px-6 py-3 rounded-lg hover:bg-red-700 transition-colors inline-flex items-center gap-2 mb-4"
+          >
+            <LuArrowRight className="w-4 h-4" />
+            Start Your Free Trial
+          </motion.button>
+
+          {/* Trial Info */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-sm text-gray-500"
+          >
+            7 day free trial. No credit card required.
+          </motion.p>
+
+          {/* Product Preview */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="w-full lg:w-1/2"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-16"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="flex items-center mb-6"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="flex items-center gap-2 text-xs font-semibold bg-orange-100 text-orange-800 px-4 py-1.5 rounded-full border border-orange-200 shadow-sm"
-              >
-                <LuSparkles className="text-base" />
-                AI Powered Interview
-              </motion.div>
-            </motion.div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-              <span className="block">Ace Your Next</span>
-              <span
-                className="text-transparent bg-clip-text"
-                style={{
-                  backgroundImage: "radial-gradient(circle, #FF9324 0%, #FCD760 100%)",
-                  backgroundSize: "200% 200%",
-                  animation: "text-shine 3s linear infinite"
-                }}
-              >
-                Technical Interview
-              </span>
-            </h1>
-
-            <p className="text-lg text-gray-700 mb-8 max-w-lg">
-              Get role-specific interview questions, AI-powered feedback, and personalized coaching to
-              transform your interview skills.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={handleCTA}
-                className="relative overflow-hidden group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <span className="relative z-10 bg-black text-white font-semibold px-8 py-3.5 rounded-full group-hover:bg-transparent transition-all duration-300 flex items-center">
-                  Get Started Free
-                  <LuArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
-                </span>
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="bg-white text-gray-800 font-semibold px-8 py-3.5 rounded-full border border-gray-200 hover:border-amber-300 transition-all duration-300 flex items-center shadow-sm"
-              >
-                See How It Works
-              </motion.button>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="mt-10 flex items-center gap-4"
-            >
-              <div className="flex -space-x-3">
-                {[1, 2, 3].map((item) => (
-                  <div key={item} className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 border-2 border-white"></div>
-                ))}
-              </div>
-              <div className="text-sm text-gray-600">
-                <span className="font-semibold text-amber-700">5000+</span> professionals boosted their careers
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Preview Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full lg:w-1/2"
-          >
-            <motion.div
-              animate={{
-                y: [0, -10, 0],
-                transition: {
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }
-              }}
-              className="relative"
-            >
-              {/* Glow effects */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-orange-300 to-orange-500 rounded-3xl opacity-20 blur-xl"></div>
-              <div className="absolute -inset-1 bg-gradient-to-r from-orange-300 to-orange-500 rounded-3xl opacity-10 blur-lg"></div>
-
-              {/* Preview Card */}
-              <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 z-10">
-                {/* Header */}
-                <div className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white">
-                        <LuSparkles className="text-lg" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-gray-900">Interview Prep AI</h3>
-                        <p className="text-xs text-gray-500">Frontend Developer</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs text-gray-500">Logged</p>
-                      <p className="text-sm font-semibold text-gray-800">Mike William</p>
-                    </div>
+            <div className="relative">
+              {/* Glow background */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-red-200 via-orange-200 to-yellow-200 rounded-2xl opacity-20 blur-2xl"></div>
+              
+              {/* Main preview container */}
+              <div className="relative bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 overflow-hidden shadow-2xl">
+                {/* Top bar */}
+                <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-8 py-4 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
                   </div>
+                  <span className="text-gray-400 text-sm">UpskillMe AI - Interview Prep</span>
+                  <div className="w-16"></div>
                 </div>
 
-                {/* Content Area */}
-                <div className="flex">
-                  {/* Sidebar */}
-                  <div className="w-32 border-r border-gray-100 p-4 space-y-4">
-                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-orange-100 text-orange-700 text-sm font-medium cursor-pointer">
-                      <FiTarget className="text-lg" />
-                      <span className="hidden sm:inline">Dashboard</span>
-                    </div>
-                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm font-medium cursor-pointer transition-colors">
-                      <FiMessageCircle className="text-lg" />
-                      <span className="hidden sm:inline">Interviews</span>
-                    </div>
-                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm font-medium cursor-pointer transition-colors">
-                      <LuSparkles className="text-lg" />
-                      <span className="hidden sm:inline">AI Feedback</span>
-                    </div>
-                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm font-medium cursor-pointer transition-colors">
-                      <FiTrendingUp className="text-lg" />
-                      <span className="hidden sm:inline">Resources</span>
-                    </div>
-                  </div>
-
-                  {/* Main Content */}
-                  <div className="flex-1 p-6">
-                    {/* Role Info */}
-                    <div className="mb-6">
-                      <h4 className="font-bold text-gray-900 mb-1">Frontend Developer</h4>
-                      <div className="flex gap-2 flex-wrap">
-                        <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">React.js - DOM Manipulation - CSS Flexbox</span>
-                      </div>
-                      <div className="flex gap-2 mt-2 text-xs text-gray-500">
-                        <span>Experience: 2 years</span>
-                        <span>•</span>
-                        <span>Location: USA</span>
-                        <span>•</span>
-                        <span>Applied: 100-300 jobs</span>
-                      </div>
-                    </div>
-
-                    {/* Questions List */}
-                    <div className="mb-4">
-                      <h5 className="font-semibold text-gray-800 mb-3 text-sm">Interview Q & A</h5>
-                      <div className="space-y-2 max-h-40 overflow-y-auto">
-                        {[
-                          "What is JSX? Explain its role in React?",
-                          "What is React.js and what are its main advantages?",
-                          "Explain the difference between 'props' and 'state' in React",
-                          "How does the virtual DOM work in React and why is it important?",
-                          "Describe the lifecycle methods of a React component",
-                          "What is the concept of event handling in React?",
-                          "How would you handle DOM manipulation in React? Why is it generally discouraged?"
-                        ].map((question, idx) => (
-                          <div key={idx} className="text-xs text-gray-700 flex gap-2">
-                            <span className="text-gray-400 font-medium">{idx + 1}</span>
-                            <span className="text-gray-600">{question}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Feedback Section */}
-                    <div className="border-t border-gray-100 pt-4">
-                      <div className="flex justify-between items-start">
+                {/* Content grid */}
+                <div className="grid md:grid-cols-3 gap-6 p-8">
+                  {/* Left side - Features */}
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">Your Progress</h3>
+                      <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-3">
                         <div>
-                          <h5 className="font-semibold text-gray-800 mb-2 text-sm">AI Feedback</h5>
-                          <p className="text-xs text-green-700 bg-green-50 p-2 rounded">Great Answer</p>
-                          <p className="text-xs text-gray-600 mt-2">You explained JSX clearly with a good example. Consider adding how it improves readability and helps prevent injection attacks.</p>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm font-medium text-gray-700">Interview Readiness</span>
+                            <span className="text-sm font-bold text-red-600">78%</span>
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div className="bg-gradient-to-r from-red-500 to-orange-500 h-2 rounded-full" style={{width: '78%'}}></div>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <p className="text-xs text-gray-500 mb-1">Score</p>
-                          <p className="text-2xl font-bold text-green-600">8.5<span className="text-sm">/10</span></p>
-                          <a href="#" className="text-xs text-blue-600 hover:text-blue-700 mt-2 inline-block">View Detailed Feedback</a>
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm font-medium text-gray-700">Questions Practiced</span>
+                            <span className="text-sm font-bold text-green-600">42/50</span>
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style={{width: '84%'}}></div>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Related Resources */}
-                    <div className="border-t border-gray-100 mt-4 pt-4">
-                      <h5 className="font-semibold text-gray-800 mb-2 text-sm">Related Resources</h5>
-                      <div className="space-y-1">
-                        <p className="text-xs text-gray-600 flex items-center gap-2">
-                          📄 <span>CSS Flexbox: A Beginner's Guide</span>
-                        </p>
-                        <p className="text-xs text-gray-600 flex items-center gap-2">
-                          📄 <span>React Interview Cheat Sheet</span>
-                        </p>
+                    {/* Feature cards */}
+                    <div className="grid gap-3">
+                      <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200 p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center flex-shrink-0">
+                            <FiTarget className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900 text-sm">Role-Specific</h4>
+                            <p className="text-xs text-gray-600">Tailored to Frontend Dev</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg border border-purple-200 p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-purple-500 text-white flex items-center justify-center flex-shrink-0">
+                            <LuSparkles className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900 text-sm">AI Feedback</h4>
+                            <p className="text-xs text-gray-600">Real-time coaching</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200 p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-green-500 text-white flex items-center justify-center flex-shrink-0">
+                            <FiTrendingUp className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900 text-sm">Track Progress</h4>
+                            <p className="text-xs text-gray-600">Detailed analytics</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right side - Interview Q&A */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-4">Latest Question</h3>
+                    <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
+                      <div>
+                        <div className="inline-block bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">React.js</div>
+                        <h4 className="font-bold text-gray-900 text-lg mb-3">Explain the Virtual DOM and its benefits in React</h4>
+                        <p className="text-sm text-gray-600 mb-4">The Virtual DOM is a programming concept that keeps an in-memory representation of the real DOM...</p>
+                      </div>
+
+                      <div className="border-t border-gray-200 pt-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-sm font-semibold text-gray-700">Your Answer Score</span>
+                          <span className="text-2xl font-bold text-green-600">8.5/10</span>
+                        </div>
+                        <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                          <p className="text-xs text-green-700">✓ Great explanation with good examples. Consider mentioning reconciliation algorithm for more depth.</p>
+                        </div>
+                      </div>
+
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-medium py-2 rounded-lg hover:shadow-lg transition-all"
+                      >
+                        View Detailed Feedback →
+                      </motion.button>
+                    </div>
+                  </div>
+
+                  {/* Right side - Analytics Dashboard */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-4">Performance Analytics</h3>
+                    <div className="space-y-4">
+                      {/* Performance Chart */}
+                      <div className="bg-gradient-to-br from-white to-gray-50 rounded-lg border border-gray-200 p-6">
+                        <div className="mb-4">
+                          <h4 className="font-semibold text-gray-900 mb-4">Weekly Performance</h4>
+                          <div className="flex items-end justify-between gap-2 h-24">
+                            <div className="flex-1 bg-gradient-to-t from-red-400 to-red-300 rounded-t-lg" style={{height: '60%'}} title="Mon"></div>
+                            <div className="flex-1 bg-gradient-to-t from-red-300 to-red-200 rounded-t-lg" style={{height: '45%'}} title="Tue"></div>
+                            <div className="flex-1 bg-gradient-to-t from-orange-400 to-orange-300 rounded-t-lg" style={{height: '75%'}} title="Wed"></div>
+                            <div className="flex-1 bg-gradient-to-t from-orange-300 to-orange-200 rounded-t-lg" style={{height: '55%'}} title="Thu"></div>
+                            <div className="flex-1 bg-gradient-to-t from-yellow-400 to-yellow-300 rounded-t-lg" style={{height: '85%'}} title="Fri"></div>
+                            <div className="flex-1 bg-gradient-to-t from-green-400 to-green-300 rounded-t-lg" style={{height: '90%'}} title="Sat"></div>
+                            <div className="flex-1 bg-gradient-to-t from-green-300 to-green-200 rounded-t-lg" style={{height: '70%'}} title="Sun"></div>
+                          </div>
+                          <div className="flex justify-between text-xs text-gray-500 mt-2">
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                            <span>Sun</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Achievements */}
+                      <div className="bg-gradient-to-br from-white to-gray-50 rounded-lg border border-gray-200 p-6">
+                        <h4 className="font-semibold text-gray-900 mb-3">Achievements Unlocked</h4>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="flex flex-col items-center p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                            <span className="text-2xl mb-1">🏆</span>
+                            <p className="text-xs font-semibold text-gray-700">5-Day Streak</p>
+                          </div>
+                          <div className="flex flex-col items-center p-3 bg-purple-50 rounded-lg border border-purple-200">
+                            <span className="text-2xl mb-1">⚡</span>
+                            <p className="text-xs font-semibold text-gray-700">50 Questions</p>
+                          </div>
+                          <div className="flex flex-col items-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                            <span className="text-2xl mb-1">🎯</span>
+                            <p className="text-xs font-semibold text-gray-700">Perfect Score</p>
+                          </div>
+                          <div className="flex flex-col items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                            <span className="text-2xl mb-1">🚀</span>
+                            <p className="text-xs font-semibold text-gray-700">Interview Ready</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Quick Stats */}
+                      <div className="bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 rounded-lg border border-red-200 p-4">
+                        <div className="text-center">
+                          <p className="text-xs text-gray-600 mb-2">Average Score</p>
+                          <p className="text-3xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">8.7/10</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                {/* Stats footer */}
+                <div className="bg-gray-50 border-t border-gray-200 px-8 py-4 grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-red-600">1,250+</div>
+                    <p className="text-xs text-gray-600">Questions</p>
+                  </div>
+                  <div className="text-center border-l border-r border-gray-200">
+                    <div className="text-2xl font-bold text-blue-600">5,000+</div>
+                    <p className="text-xs text-gray-600">Users</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-green-600">4.9★</div>
+                    <p className="text-xs text-gray-600">Rating</p>
+                  </div>
+                </div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
-      </div>
+      </section>
 
-      {/* Features Section */}
-      <section className="relative py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Trust Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="container mx-auto text-center">
+          <p className="text-sm font-semibold text-gray-600 mb-8 tracking-wide">TRUSTED BY PROFESSIONALS FROM</p>
+          <div className="flex flex-wrap justify-center items-center gap-12 opacity-50">
+            {['Google', 'Microsoft', 'Amazon', 'Netflix', 'Meta'].map((company) => (
+              <div key={company} className="text-gray-400 font-semibold">{company}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Problem Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Transform Your Interview Skills
+            <p className="text-red-600 text-sm font-semibold mb-4 tracking-wide">THE CHALLENGE</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+              Interview preparation without guidance is stressful.
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Our AI-powered platform provides everything you need to go from nervous to confident.
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: 'Lack of Practice', description: 'Most candidates practice without real feedback, making it hard to identify improvement areas.' },
+              { title: 'Generic Resources', description: 'Generic interview guides don\'t address your specific role and tech stack requirements.' },
+              { title: 'Low Confidence', description: 'Without proper preparation, candidates enter interviews nervous and unprepared.' }
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                className="text-center p-6"
+              >
+                <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FiAlertCircle className="w-7 h-7 text-red-600" />
+                </div>
+                <h3 className="font-bold text-lg text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-600">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Solution Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="container mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="text-red-600 text-sm font-semibold mb-4 tracking-wide">OUR SOLUTION</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+              Master Interviews with AI-Powered Coaching
+            </h2>
+            <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+              UpskillMe AI provides personalized interview preparation with role-specific questions, real-time feedback, and AI coaching to help you land your dream job.
             </p>
           </motion.div>
 
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Feature 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0, duration: 0.5 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-              className="text-center"
-            >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-50 rounded-full flex items-center justify-center">
-                  <FiTarget className="text-orange-600 text-2xl" />
-                </div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Role-Specific Preparation</h3>
-              <p className="text-gray-600 text-sm">Practice questions tailored to your job role, tech stack, and experience level.</p>
-            </motion.div>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {[
+              { title: 'Role-Specific Questions', description: 'Practice with real interview questions tailored to your job role, tech stack, and experience level.' },
+              { title: 'AI-Powered Feedback', description: 'Get instant, detailed feedback on your answers with suggestions for improvement in real-time.' },
+              { title: 'Track Progress', description: 'Monitor your performance over time and identify areas to focus on for maximum improvement.' }
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                className="bg-white p-8 rounded-lg border border-gray-200"
+              >
+                <h3 className="text-red-600 font-bold text-lg mb-3">{item.title}</h3>
+                <p className="text-gray-600">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* Feature 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-              className="text-center"
-            >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full flex items-center justify-center">
-                  <FiMessageCircle className="text-blue-600 text-2xl" />
-                </div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">AI-Powered Feedback</h3>
-              <p className="text-gray-600 text-sm">Get instant, detailed feedback and improve your answers in real-time.</p>
-            </motion.div>
+      {/* How It Works */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="text-red-600 text-sm font-semibold mb-4 tracking-wide">HOW IT WORKS</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+              Just 3 steps to ace your interview
+            </h2>
+          </motion.div>
 
-            {/* Feature 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-              className="text-center"
-            >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-red-50 rounded-full flex items-center justify-center">
-                  <FiTrendingUp className="text-red-600 text-2xl" />
-                </div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Track Your Progress</h3>
-              <p className="text-gray-600 text-sm">Monitor your performance and identify areas to focus on for improvement.</p>
-            </motion.div>
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            {/* Left side - Steps */}
+            <div className="space-y-12">
+              {[
+                { num: '1', title: 'Select Your Role', desc: 'Choose your target job role, experience level, and tech stack to get personalized questions.' },
+                { num: '2', title: 'Practice with AI', desc: 'Answer interview questions and receive real-time AI-powered feedback and coaching.' },
+                { num: '3', title: 'Ace Your Interview', desc: 'Build confidence with targeted practice and land your dream job.' }
+              ].map((step, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="flex gap-8 items-start"
+                >
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                      <span className="text-red-600 font-bold">{step.num}</span>
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{step.title}</h3>
+                    <p className="text-gray-600">{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
 
-            {/* Feature 4 */}
+            {/* Right side - Visual Illustration */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-              className="text-center"
+              className="hidden md:flex justify-center items-center"
             >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-full flex items-center justify-center">
-                  <FiZap className="text-yellow-600 text-2xl" />
+              <div className="relative w-full max-w-sm h-96">
+                {/* Background gradient circles */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-100 to-orange-100 rounded-3xl opacity-50"></div>
+                
+                {/* Main content box */}
+                <div className="absolute inset-6 bg-white rounded-2xl shadow-xl p-6 flex flex-col justify-between">
+                  {/* Top section */}
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center text-white text-sm font-bold">✓</div>
+                      <span className="text-sm font-semibold text-gray-700">Interview Ready</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-200 rounded-full mb-4 overflow-hidden">
+                      <div className="w-3/4 h-full bg-gradient-to-r from-red-600 to-orange-600 rounded-full"></div>
+                    </div>
+                  </div>
+
+                  {/* Middle section */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      <p className="text-xs text-gray-600">Questions: <span className="font-semibold">42/50</span></p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
+                      <p className="text-xs text-gray-600">Score: <span className="font-semibold">8.5/10</span></p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                      <p className="text-xs text-gray-600">Sessions: <span className="font-semibold">12</span></p>
+                    </div>
+                  </div>
+
+                  {/* Bottom section */}
+                  <div className="text-center">
+                    <div className="text-2xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-2">Ready!</div>
+                    <p className="text-xs text-gray-500">You're interview ready</p>
+                  </div>
                 </div>
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Build Confidence</h3>
-              <p className="text-gray-600 text-sm">Practice smarter, not harder and walk into interviews with confidence.</p>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <AnimatedTestimonialsDemo />
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-white to-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Testimonials */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="container mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/20"
+            className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-black mb-6">
-              Ready to Ace Your Next Interview?
+            <p className="text-red-600 text-sm font-semibold mb-4 tracking-wide">SUCCESS STORIES</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+              Join thousands of successful candidates
             </h2>
-            <p className="text-xl text-amber-600 mb-8 max-w-3xl mx-auto">
-              Join thousands of professionals who landed their dream jobs with our AI coach
-            </p>
+          </motion.div>
+
+          <AnimatedTestimonialsDemo />
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-red-50">
+        <div className="container mx-auto text-center max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-red-600 text-sm font-semibold mb-4 tracking-wide">READY TO GET STARTED?</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+              Start your free interview prep today.
+            </h2>
             <motion.button
+              onClick={handleCTA}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={handleCTA}
-              className="bg-black text-white font-semibold px-10 py-4 rounded-full hover:bg-white hover:text-black transition-all duration-300 shadow-lg flex items-center mx-auto"
+              className="bg-red-600 text-white font-medium px-6 py-3 rounded-lg hover:bg-red-700 transition-colors inline-flex items-center gap-2"
             >
-              Start Free Trial <LuArrowRight className="ml-2" />
+              Get started for free
+              <LuArrowRight className="w-4 h-4" />
             </motion.button>
           </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-
       <CompactFooter />
 
       {/* Auth Modal */}

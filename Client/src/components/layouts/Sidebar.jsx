@@ -30,11 +30,11 @@ const Sidebar = () => {
       {/* Logo */}
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-orange-600 rounded-lg flex items-center justify-center">
             <LuSparkles className="text-white text-lg" />
           </div>
           <div>
-            <div className="text-lg font-bold text-orange-600">UpskillMe</div>
+            <div className="text-lg font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">UpskillMe</div>
             <div className="text-xs text-gray-500">AI Interview Prep</div>
           </div>
         </div>
@@ -53,7 +53,7 @@ const Sidebar = () => {
               whileHover={{ x: 4 }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-all ${
                 active
-                  ? "bg-orange-500 text-white shadow-md"
+                  ? "bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md"
                   : "text-gray-600 hover:bg-gray-50"
               }`}
             >
@@ -68,7 +68,7 @@ const Sidebar = () => {
       {user && (
         <div className="p-4 border-t border-gray-100">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-orange-500 text-white font-semibold flex items-center justify-center uppercase text-sm">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-orange-600 text-white font-semibold flex items-center justify-center uppercase text-sm">
               {getInitials(user?.name || "")}
             </div>
             <div className="flex-1 min-w-0">
