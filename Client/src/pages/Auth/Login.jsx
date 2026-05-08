@@ -50,7 +50,7 @@ const Login = ({ setCurrentPage }) => {
       const { token } = response.data;
 
       if (token) {
-        localStorage.setItem("token", token);
+        localStorage.setItem("accessToken", token);
         updateUser(response.data);
         toast.success("Login successful!");
         navigate("/dashboard");
