@@ -23,8 +23,23 @@ const generateInterviewQuestions = async (req, res) => {
       role,
       experience,
       topicsToFocus,
-      numberOfQuestions,
+      numberOfQuestions = 10,
     } = req.body;
+
+    if (!role || !experience || !topicsToFocus) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields: role, experience, topicsToFocus",
+      });
+    }
+
+    if (!process.env.OPENROUTER_API_KEY) {
+      console.error("OPENROUTER_API_KEY is not set");
+      return res.status(500).json({
+        success: false,
+        message: "Server configuration error",
+      });
+    }
 
     const prompt = `
 Generate ${numberOfQuestions} interview questions with answers.
@@ -34,7 +49,7 @@ Experience: ${experience}
 Topics: ${topicsToFocus}
 
 Rules:
-- Return ONLY valid JSON
+- Return ONLY valid JSON array
 - No markdown
 - No extra explanation
 - Each object must contain:
@@ -54,10 +69,12 @@ Example:
 ]
 `;
 
+    console.log("Sending request to OpenRouter API...");
+
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "openrouter/free",
+        model: "meta-llama/llama-2-7b-chat",
         messages: [
           {
             role: "user",
@@ -69,7 +86,9 @@ Example:
         headers: {
           Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
+          "HTTP-Referer": "https://upskillme-ai.onrender.com",
         },
+        timeout: 30000,
       }
     );
 
@@ -92,7 +111,7 @@ Example:
 
     res.status(500).json({
       success: false,
-      message: "Failed to generate questions",
+      message: "Failed to generate questions: " + (error.response?.data?.error?.message || error.message),
     });
   }
 };
