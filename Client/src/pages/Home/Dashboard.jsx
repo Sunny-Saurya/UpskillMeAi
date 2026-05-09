@@ -47,33 +47,33 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className="px-8 py-8 flex-1">
+      <div className="px-4 md:px-8 py-8 flex-1">
         {/* Welcome Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
             Hai, {user?.name?.split(" ")[0]}
           </h1>
-          <p className="text-gray-600 mt-1">Welcome back to UpskillMe AI</p>
+          <p className="text-gray-600 mt-1 text-sm md:text-base">Welcome back to UpskillMe AI</p>
         </motion.div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-red-600 hover:shadow-md transition-shadow"
+            className="bg-white rounded-xl shadow-sm p-4 md:p-6 border-l-4 border-red-600 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-medium">Total Sessions</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{sessions.length}</p>
+                <p className="text-gray-600 text-xs md:text-sm font-medium">Total Sessions</p>
+                <p className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">{sessions.length}</p>
               </div>
-              <div className="text-red-600 text-3xl">
+              <div className="text-red-600 text-2xl md:text-3xl">
                 <LuMessageCircle />
               </div>
             </div>
@@ -83,16 +83,16 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-600 hover:shadow-md transition-shadow"
+            className="bg-white rounded-xl shadow-sm p-4 md:p-6 border-l-4 border-orange-600 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-medium">In Progress</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
+                <p className="text-gray-600 text-xs md:text-sm font-medium">In Progress</p>
+                <p className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
                   {sessions.filter(s => s.status === "in-progress").length}
                 </p>
               </div>
-              <div className="text-orange-600 text-3xl">
+              <div className="text-orange-600 text-2xl md:text-3xl">
                 <LuTrendingUp />
               </div>
             </div>
@@ -102,16 +102,16 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-600 hover:shadow-md transition-shadow"
+            className="bg-white rounded-xl shadow-sm p-4 md:p-6 border-l-4 border-green-600 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-medium">Completed</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
+                <p className="text-gray-600 text-xs md:text-sm font-medium">Completed</p>
+                <p className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
                   {sessions.filter(s => s.status === "completed").length}
                 </p>
               </div>
-              <div className="text-green-600 text-3xl">
+              <div className="text-green-600 text-2xl md:text-3xl">
                 <LuCheck />
               </div>
             </div>
@@ -119,12 +119,12 @@ const Dashboard = () => {
         </div>
 
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <motion.h2
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="text-2xl font-bold text-gray-800"
+            className="text-xl md:text-2xl font-bold text-gray-800"
           >
             Interview Sessions
           </motion.h2>
@@ -132,10 +132,10 @@ const Dashboard = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setOpenCreateModal(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium px-5 py-2.5 rounded-lg shadow-lg hover:shadow-xl transition-all"
+            className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium px-4 md:px-5 py-2 md:py-2.5 rounded-lg shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
           >
             <LuPlus className="text-lg" />
-            Create Interview
+            <span>Create Interview</span>
           </motion.button>
         </div>
 

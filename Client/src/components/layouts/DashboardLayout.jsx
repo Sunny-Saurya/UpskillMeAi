@@ -1,24 +1,49 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
 import Sidebar from "./Sidebar";
 import TopNav from "./TopNav";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 // import { LuLoader2 } from "react-icons/lu";
 import { FiAlertCircle } from "react-icons/fi";
 
 
 const DashboardLayout = ({ children }) => {
   const { user } = useContext(UserContext);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <Sidebar />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Mobile Sidebar Drawer */}
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSidebarOpen(false)}
+            className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
+          />
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        initial={false}
+        animate={{ x: sidebarOpen ? 0 : -256 }}
+        transition={{ duration: 0.3 }}
+        className="md:hidden fixed left-0 top-0 w-64 h-screen z-30"
+      >
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </motion.div>
+
+      {/* Desktop Sidebar - Always Visible */}
+      <div className="hidden md:block fixed left-0 top-0 w-64 h-screen">
+        <Sidebar isOpen={true} onClose={() => {}} />
+      </div>
 
       {/* Main Content Area */}
-      <main className="ml-64 min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
+      <main className="md:ml-64 min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
         {/* Top Navigation */}
-        {user && <TopNav />}
+        {user && <TopNav onMenuClick={() => setSidebarOpen(!sidebarOpen)} />}
         
         <div className="flex-1">
         {user === undefined ? (
@@ -82,8 +107,8 @@ const DashboardLayout = ({ children }) => {
       </main>
 
       {/* Footer */}
-      <footer className="ml-64 bg-white border-t border-gray-200 py-4">
-        <div className="px-6 text-center text-sm text-gray-500">
+      <footer className="md:ml-64 bg-white border-t border-gray-200 py-4 px-4 md:px-6">
+        <div className="text-center text-sm text-gray-500">
           © {new Date().getFullYear()} UpskillMe AI. All rights reserved.
         </div>
       </footer>

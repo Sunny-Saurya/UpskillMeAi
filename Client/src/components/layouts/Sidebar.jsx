@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LuSparkles, LuLayoutDashboard, LuVideo, LuBook, LuUser, LuLogOut } from "react-icons/lu";
+import { LuSparkles, LuLayoutDashboard, LuVideo, LuBook, LuUser, LuLogOut, LuX } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { getInitials } from "../../utils/helper.js";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen = true, onClose }) => {
   const { user, clearUser } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,10 +23,22 @@ const Sidebar = () => {
     navigate("/");
   };
 
+  const handleNavClick = (path) => {
+    navigate(path);
+    onClose?.();
+  };
+
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="w-64 h-screen bg-white shadow-lg flex flex-col fixed left-0 top-0">
+    <div className="w-64 h-screen bg-white shadow-lg flex flex-col">
+      {/* Close Button for Mobile */}
+      <div className="md:hidden flex justify-end p-4">
+        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <LuX className="text-2xl" />
+        </button>
+      </div>
+
       {/* Logo */}
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center gap-3">
@@ -49,7 +61,7 @@ const Sidebar = () => {
           return (
             <motion.button
               key={index}
-              onClick={() => navigate(item.path)}
+              onClick={() => handleNavClick(item.path)}
               whileHover={{ x: 4 }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-all ${
                 active
@@ -57,7 +69,7 @@ const Sidebar = () => {
                   : "text-gray-600 hover:bg-gray-50"
               }`}
             >
-              <Icon className="text-lg" />
+              <Icon className="text-lg flex-shrink-0" />
               <span className="font-medium">{item.label}</span>
             </motion.button>
           );
@@ -72,10 +84,10 @@ const Sidebar = () => {
               <img 
                 src={user.profileImageUrl} 
                 alt={user?.name}
-                className="w-10 h-10 rounded-full object-cover border-2 border-red-600"
+                className="w-10 h-10 rounded-full object-cover border-2 border-red-600 flex-shrink-0"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-orange-600 text-white font-semibold flex items-center justify-center uppercase text-sm">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-orange-600 text-white font-semibold flex items-center justify-center uppercase text-sm flex-shrink-0">
                 {getInitials(user?.name || "")}
               </div>
             )}
