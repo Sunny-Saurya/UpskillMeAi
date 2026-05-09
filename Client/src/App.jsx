@@ -7,8 +7,10 @@ import Login from "./pages/Auth/Login"
 import SignUp from "./pages/Auth/SignUp"
 import LandingPage from "./pages/LandingPage"
 import Dashboard from "./pages/Home/Dashboard"
+import Interviews from "./pages/Interviews"
 import InterviewPrep from "./pages/InterviewPrep/InterviewPrep"
 import Profile from "./pages/Profile"
+import ResumeUpload from "./pages/ResumeSync/ResumeUpload"
 import UserProvider from './context/userContext'
 
 const App = () => {
@@ -21,7 +23,9 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/interviews" element={<Interviews />} />
           <Route path="/interview-prep/:sessionId" element={<InterviewPrep />} />
+          <Route path="/resume-sync" element={<ResumeUpload />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>

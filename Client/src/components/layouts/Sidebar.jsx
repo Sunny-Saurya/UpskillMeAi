@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LuSparkles, LuLayoutDashboard, LuVideo, LuBook, LuUser, LuLogOut, LuX } from "react-icons/lu";
+import { LuSparkles, LuLayoutDashboard, LuVideo, LuBook, LuUser, LuLogOut, LuX, LuFileText } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { getInitials } from "../../utils/helper.js";
 
@@ -13,6 +13,7 @@ const Sidebar = ({ isOpen = true, onClose }) => {
   const menuItems = [
     { icon: LuLayoutDashboard, label: "Dashboard", path: "/dashboard" },
     { icon: LuVideo, label: "Interviews", path: "/interviews" },
+    { icon: LuFileText, label: "Resume Sync", path: "/resume-sync" },
     { icon: LuBook, label: "Learn", path: "/learn" },
     { icon: LuUser, label: "Profile", path: "/profile" },
   ];

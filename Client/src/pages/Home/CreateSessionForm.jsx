@@ -8,7 +8,7 @@ import SpinnerLoader from '../../components/Loader/SpinnerLoader';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 
-const CreateSessionForm = () => {
+const CreateSessionForm = ({ onSuccess }) => {
   const [formData, setFormData] = React.useState({
     role: '',
     experience: '',
@@ -76,7 +76,13 @@ const CreateSessionForm = () => {
 
       if (response.data?.session?._id) {
         toast.success("Session created successfully!");
-        navigate(`/interview-prep/${response.data.session._id}`);
+        
+        // If onSuccess callback is provided, call it instead of navigating
+        if (onSuccess) {
+          onSuccess(response.data.session._id);
+        } else {
+          navigate(`/interview-prep/${response.data.session._id}`);
+        }
       }
     } catch (error) {
       const errorMessage = error?.response?.data?.message || "Failed to create session. Please try again.";

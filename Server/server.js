@@ -5,7 +5,7 @@ const path = require("path");
 const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
- 
+const resumeRoutes = require("./routes/resumeRoutes");
 const sessionRoutes = require("./routes/sessionRoutes");
 
 const questionRoutes = require("./routes/questionRoutes");
@@ -27,6 +27,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/auth", resumeRoutes);
 app.use("/api/sessions", sessionRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/ai/generate-questions",protect, generateInterviewQuestions);
