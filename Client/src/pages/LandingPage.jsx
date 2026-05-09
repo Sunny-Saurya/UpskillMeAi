@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { LuSparkles, LuArrowRight, LuChevronDown, LuBell } from "react-icons/lu";
 import { FiTarget, FiMessageCircle, FiTrendingUp, FiZap, FiAlertCircle } from "react-icons/fi";
 
-import HERO_IMG from "../assets/Hero_Image.png";
 import { UserContext } from '../context/userContext';
 import Modal from "../components/Modal";
 import Login from "./Auth/Login";
