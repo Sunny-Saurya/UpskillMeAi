@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LuBriefcase, LuTrendingUp, LuBookmark, LuFileText, LuSparkles, LuBuild } from 'react-icons/lu';
+import { LuBriefcase, LuTrendingUp, LuBookmark, LuFileText, LuSparkles } from 'react-icons/lu';
 import toast from 'react-hot-toast';
 
 import SpinnerLoader from '../../components/Loader/SpinnerLoader';

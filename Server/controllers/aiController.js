@@ -74,7 +74,7 @@ Example:
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "meta-llama/llama-2-7b-chat",
+        model: "openrouter/auto",
         messages: [
           {
             role: "user",
