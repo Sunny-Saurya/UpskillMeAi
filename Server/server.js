@@ -12,7 +12,7 @@ const questionRoutes = require("./routes/questionRoutes");
 
 const { protect } = require("./middlewares/authMiddleware");
 
-const { generateInterviewQuestions, generateConceptExplanation, generateMoreQuestions } = require("./controllers/aiController");
+const { generateInterviewQuestions, generateConceptExplanation, generateMoreQuestions, generateCompanySpecificQuestions } = require("./controllers/aiController");
 const app = express();
 
 // Middleware
@@ -30,8 +30,17 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth", resumeRoutes);
 app.use("/api/sessions", sessionRoutes);
 app.use("/api/questions", questionRoutes);
-app.use("/api/ai/generate-questions",protect, generateInterviewQuestions);
-app.use("/api/ai/generate-explanation",protect, generateConceptExplanation);
+
+// Smart routing: check if company-specific or general questions
+app.post("/api/ai/generate-questions", protect, (req, res) => {
+  if (req.body.isCompanySpecific || req.body.company) {
+    generateCompanySpecificQuestions(req, res);
+  } else {
+    generateInterviewQuestions(req, res);
+  }
+});
+
+app.use("/api/ai/generate-explanation", protect, generateConceptExplanation);
 app.use("/api/ai/upload-more-questions", protect, generateMoreQuestions);
 
 // Serve uploads

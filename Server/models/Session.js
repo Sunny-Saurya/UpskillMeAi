@@ -10,6 +10,13 @@ const sessionSchema = new mongoose.Schema({
     topicsToFocus: {type:String, required:true},
 
     description:String,
+    
+    interviewType: {type: String, enum: ['general', 'company-specific'], default: 'general'},
+    
+    company: {type: String, default: null},
+    
+    roleType: {type: String, default: null},
+    
     questions:[{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}],
 },
 { timestamps:true }
