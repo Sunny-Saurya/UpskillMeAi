@@ -1,4 +1,13 @@
 require("dotenv").config();
+
+// === Startup Environment Check ===
+console.log("=== Environment Variable Check ===");
+console.log("OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY ? `SET (${process.env.OPENROUTER_API_KEY.substring(0, 10)}...)` : "NOT SET");
+console.log("GEMINI_API_KEY:", process.env.GEMINI_API_KEY ? "SET" : "NOT SET");
+console.log("MONGODB_URI:", process.env.MONGODB_URI ? "SET" : "NOT SET");
+console.log("JWT_SECRET:", process.env.JWT_SECRET ? "SET" : "NOT SET");
+console.log("NODE_ENV:", process.env.NODE_ENV || "not set");
+console.log("=================================");
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -54,4 +63,18 @@ app.listen(PORT, () => {
 
 app.get("/", (req, res) => {
     res.send("Welcome to the UpSkillMe AI Backend!");
+});
+
+// === Health Check / Diagnostic Endpoint ===
+app.get("/api/health", (req, res) => {
+    res.status(200).json({
+        status: "ok",
+        timestamp: new Date().toISOString(),
+        env: {
+            OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY ? `SET (starts with ${process.env.OPENROUTER_API_KEY.substring(0, 8)}...)` : "NOT SET ❌",
+            MONGODB_URI: process.env.MONGODB_URI ? "SET ✅" : "NOT SET ❌",
+            JWT_SECRET: process.env.JWT_SECRET ? "SET ✅" : "NOT SET ❌",
+            NODE_ENV: process.env.NODE_ENV || "not set",
+        },
+    });
 });

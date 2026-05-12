@@ -66,7 +66,7 @@ Make sure to:
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "openrouter/auto",
+        model: "google/gemini-2.0-flash-lite-preview-02-05:free",
         messages: [
           {
             role: "user",
@@ -92,7 +92,7 @@ Make sure to:
     // Extract JSON from response
     const start = rawText.indexOf("{");
     const end = rawText.lastIndexOf("}");
-    
+
     if (start === -1 || end === -1) {
       throw new Error("Could not parse resume - invalid response format");
     }
@@ -209,7 +209,7 @@ Example:
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "openrouter/auto",
+        model: "google/gemini-2.0-flash-lite-preview-02-05:free",
         messages: [
           {
             role: "user",
@@ -235,7 +235,7 @@ Example:
     // Extract JSON
     const start = rawText.indexOf("[");
     const end = rawText.lastIndexOf("]");
-    
+
     if (start === -1 || end === -1) {
       throw new Error("Invalid JSON response");
     }
