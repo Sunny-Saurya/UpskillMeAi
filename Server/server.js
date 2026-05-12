@@ -72,8 +72,8 @@ app.get("/api/health", (req, res) => {
         timestamp: new Date().toISOString(),
         env: {
             OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY ? `SET (starts with ${process.env.OPENROUTER_API_KEY.substring(0, 8)}...)` : "NOT SET ❌",
-            MONGODB_URI: process.env.MONGODB_URI ? "SET ✅" : "NOT SET ❌",
-            JWT_SECRET: process.env.JWT_SECRET ? "SET ✅" : "NOT SET ❌",
+            MONGODB_URI: process.env.MONGODB_URI ? `SET (starts with ${process.env.MONGODB_URI.substring(0, 8)}...)` : "NOT SET ❌",
+            JWT_SECRET: process.env.JWT_SECRET ? `SET (starts with ${process.env.JWT_SECRET.substring(0, 8)}...)` : "NOT SET ❌",
             NODE_ENV: process.env.NODE_ENV || "not set",
         },
     });
