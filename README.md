@@ -1,4 +1,6 @@
 # 🚀 UpskillMe AI – AI-Powered Interview Preparation Platform
+<img width="1428" height="977" alt="image" src="https://github.com/user-attachments/assets/3c338927-d8c3-4e0a-804a-4a05b0aec16c" />
+
 
 UpskillMe AI is a modern full-stack web application designed to help users prepare for job interviews using AI-generated interview questions and personalized preparation sessions.
 
