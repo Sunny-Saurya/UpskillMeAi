@@ -7,7 +7,7 @@ const questionSchema = new mongoose.Schema({
     note:String,
     isPinned:{type:Boolean, default:false},
 },
-{ timestamps:true }
+{ timestamps: true }
 );
 
 module.exports = mongoose.model("Question", questionSchema);

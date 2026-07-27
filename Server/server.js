@@ -32,11 +32,11 @@ app.use(cors({
 }));
 
 connectDB();
-app.use(express.json());
+app.use(express.json({ limit: '15mb' }));
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/auth", resumeRoutes);
+app.use("/api/resume", resumeRoutes);
 app.use("/api/sessions", sessionRoutes);
 app.use("/api/questions", questionRoutes);
 
