@@ -4,7 +4,7 @@ export const API_PATHS = {
         REGISTER: "/api/auth/register",
         LOGIN: "/api/auth/login",
         GET_PROFILE: "/api/auth/profile",
-        PARSE_RESUME: "/api/auth/parse-resume",
+        PARSE_RESUME: "/api/resume/parse-resume",
     },
 
     IMAGE: {
@@ -15,7 +15,7 @@ export const API_PATHS = {
         GENERATE_QUESTIONS: "/api/ai/generate-questions",
         GENERATE_EXPLANATION: "/api/ai/generate-explanation",
         UPLOAD_MORE_QUESTIONS: "/api/ai/upload-more-questions",
-        GENERATE_RESUME_QUESTIONS: "/api/ai/generate-resume-questions",
+        GENERATE_RESUME_QUESTIONS: "/api/resume/generate-resume-questions",
     },
 
     SESSION: {
